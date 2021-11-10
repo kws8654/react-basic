@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function Btn({text, onClick}) { //props에 text="Save Change"가 전달 됨
+        return (
+            <button
+                onClick={onClick}
+                style={{
+                    backgroundColor: "tomato",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 50,
+                    fontSize: 15,
+                }}
+            >
+            {text}
+            </button>
+        );
+    }
+    const MemorizedBtn = React.memo(Btn); // memo function을 사용하면 변하지 않지만 렌더되는 prop을 기억함
+
+    function App() {
+        const [value, setValue] = React.useState("Save Changes");
+        function changeValue() {
+            setValue("Revert Changes");
+        }
+        return (
+            <div>
+                <Btn text={value} onClick={changeValue} />
+                <Btn text="Continue" />
+            </div>
+        );
+    }
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+</script>
+
+</html>

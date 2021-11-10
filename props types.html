@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <body>
     <div id="root"></div>
 </body>
 <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-    function Btn({text, onClick}) { //props에 text="Save Change"가 전달 됨
+    function Btn({ text, fontSize = 16 }) { //props에 text="Save Change"가 전달 됨
         return (
             <button
-                onClick={onClick}
                 style={{
                     backgroundColor: "tomato",
                     color: "white",
                     padding: "10px 20px",
                     border: 0,
                     borderRadius: 50,
-                    fontSize: 15,
+                    fontSize,
                 }}
             >
-            {text}
+                {text}
             </button>
         );
     }
-    const MemorizedBtn = React.memo(Btn);
+
+    Btn.protoTypes = { // 타입을 지정해줌
+        text: PropTypes.string,
+        fontSize: PropTypes.number, //isRequired => 특성작성필요 알림
+    }
+
     function App() {
-        const [value, setValue] = React.useState("Save Changes");
-        function changeValue() {
-            setValue("Revert Changes");
-        }
         return (
             <div>
-                <Btn text={value} onClick={changeValue} />
-                <Btn text="Continue" />
+                <Btn text="Save Changes" fontSize={18} />
+                <Btn text={"Continue"} />
             </div>
         );
     }
